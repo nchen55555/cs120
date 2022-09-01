@@ -31,7 +31,14 @@ class BTvertex:
 # Runtime: O(n)
 def calculate_sizes(v):
     # Your code goes here
-    pass
+    if v is None : 
+        return 0
+    else :
+        size = calculate_sizes(v.left) + calculate_sizes(v.right) + 1
+        v.size = size
+        return size
+
+# justification for why it runs O(n) times? ask andrew
 
 #
 # Problem 1c
@@ -44,4 +51,8 @@ def calculate_sizes(v):
 # Runtime: O(h)
 def find_vertex(r): 
     # Your code goes here
-    pass
+    if max(r.left.size, r.right.size, r.size - r.parent.size) <= 1/2 :
+        r
+    else :
+        r
+#can i define here size n?
