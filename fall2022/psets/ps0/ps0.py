@@ -51,13 +51,17 @@ def calculate_sizes(v):
 # Runtime: O(h)
 
 def find_vertex(r): 
+    # helper function find_size determines the size of each vertex, ensuring that
+    # ... a none error doesn't occur if the method .size is invoked on a none
     def find_size (r): 
         if r is None: 
             return 0 
         else:
             return r.size
+    # helper function find_vertex_helper(r, n) recursively goes through each 
+    # ... vertex (r) holding the size n (of the root) 
     def find_vertex_helper (r, n):
-        if (find_size(r.left) <= n/2) and (find_size(r.right) <= n/2):
+        if find_size(r.left) <= n/2 and find_size(r.right) <= n/2:
             return r
         elif find_size(r.left) > find_size(r.right): 
             return find_vertex_helper (r.left, n)
