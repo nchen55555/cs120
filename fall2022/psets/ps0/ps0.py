@@ -49,20 +49,21 @@ def calculate_sizes(v):
 # Output: A BTvertex that, if removed from the tree, would result
 # ... in disjoint trees that all have at most n/2 vertices
 # Runtime: O(h)
-size = 0 
-def find_root_size (r):
-    r.size
 
 def find_vertex(r): 
-    # Your code goes here
-    if r.parent is None: 
-        size = find_root_size(r)
-    if size - r.size <= size/2: 
-        if (r.left.size <= size/2) or (r.right.size <= size/2):
-            r
-        elif (r.left.size > r.right.size): 
-            find_vertex (r.left)
+    def find_size (r): 
+        if r is None: 
+            return 0 
         else:
-            find_vertex (r.right)
-    else:
-        None
+            return r.size
+    def find_vertex_helper (r, n):
+        if (find_size(r.left) <= n/2) and (find_size(r.right) <= n/2):
+            return r
+        elif find_size(r.left) > find_size(r.right): 
+            return find_vertex_helper (r.left, n)
+        else:
+            return find_vertex_helper (r.right, n)
+    return find_vertex_helper(r, find_size(r))
+    
+    
+        
