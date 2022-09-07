@@ -38,8 +38,6 @@ def calculate_sizes(v):
         v.size = size
         return size
 
-# justification for why it runs O(n) times? ask andrew
-
 #
 # Problem 1c
 #
