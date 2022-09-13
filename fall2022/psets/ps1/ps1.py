@@ -16,7 +16,9 @@ In general, for each value of n and each universe size 'U' you will want to
 To graph, you can use a library like matplotlib or simply put your data in a Google/Excel sheet.
 A great resource for all your (current and future) graphing needs is the Python Graph Gallery 
 """
-
+def print_arr(arr): 
+    for i in range(len(arr)): 
+        print("(", arr[i][0], ", ", arr[i][1], ")", end = ", ")
 
 def merge(arr1, arr2):
     sortedArr = []
@@ -76,3 +78,50 @@ def BC(n, b, k):
         raise ValueError()
     return digits
 
+def radixSort(univsize, b, arr): 
+    k = math.ceil (math.log2(univsize)/math.log2(b))#int(math.log(univsize,b) + 1) #K needs to be an integer because of range function do we round up or down 
+    n = len(arr)
+    temp_array = []
+    for i in range(n): 
+        v_sub = BC(arr[i][0], b, k)
+        temp_array.append([arr[i][0],[arr[i][1], v_sub]])
+    for j in range(k): 
+        for i in range(n): 
+            temp_array[i][0] = temp_array[i][1][1][j]
+        temp_array = countSort(b, temp_array)
+    for i in range(n): 
+        for j in range(k): #can we consolidate here
+            if j == 0: 
+                arr[i][0] = temp_array[i][1][1][j] * pow(b,j)
+            else: 
+                arr[i][0] += temp_array[i][1][1][j] * pow(b,j)
+        arr[i][1] = temp_array[i][1][0]
+    return arr
+
+def tests(): 
+    for univSize in range(1,21):
+        for nSize in range(1,17):
+            #print("U ", univSize, " N ", nSize)
+            u = pow(2,univSize)
+            n = pow(2,nSize)
+            random_array = []
+            for i in range(n): 
+                random_array.append([random.randint(0, u-1), 0])
+            #print("Running Merge Sort: ", end = "")
+            start = time.time()
+            mergeSort(random_array)
+            end = time.time()
+            print((end-start) *1000, "ms", end = "\n")
+            #print("Running Count Sort: ", end = "")
+            #start = time.time()
+            #countSort(u, random_array)
+            #end = time.time()
+            #print((end-start)*1000, "ms", end = "\n")
+            #print("Running Radix Sort: ", end = "")
+            #start = time.time()
+            #radixSort(u, n, random_array)
+            #end = time.time()
+            #print((end-start)*1000, "ms", end = "\n")
+
+if __name__ == "__main__":
+    tests()
