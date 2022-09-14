@@ -79,7 +79,7 @@ def BC(n, b, k):
     return digits
 
 def radixSort(univsize, b, arr): 
-    k = math.ceil (math.log2(univsize)/math.log2(b))#int(math.log(univsize,b) + 1) #K needs to be an integer because of range function do we round up or down 
+    k = math.ceil (math.log2(univsize)/math.log2(b))
     n = len(arr)
     temp_array = []
     for i in range(n): 
@@ -99,7 +99,7 @@ def radixSort(univsize, b, arr):
     return arr
 
 def tests(): 
-    for univSize in range(1,21):
+    for univSize in range(0,1):
         for nSize in range(1,17):
             #print("U ", univSize, " N ", nSize)
             u = pow(2,univSize)
@@ -108,20 +108,20 @@ def tests():
             for i in range(n): 
                 random_array.append([random.randint(0, u-1), 0])
             #print("Running Merge Sort: ", end = "")
-            start = time.time()
-            mergeSort(random_array)
-            end = time.time()
-            print((end-start) *1000, "ms", end = "\n")
+            #start = time.time()
+            #mergeSort(random_array)
+            #end = time.time()
+            #print((end-start) *1000, "ms", end = "\n")
             #print("Running Count Sort: ", end = "")
             #start = time.time()
             #countSort(u, random_array)
             #end = time.time()
             #print((end-start)*1000, "ms", end = "\n")
             #print("Running Radix Sort: ", end = "")
-            #start = time.time()
-            #radixSort(u, n, random_array)
-            #end = time.time()
-            #print((end-start)*1000, "ms", end = "\n")
+            start = time.time()
+            radixSort(u, n, random_array)
+            end = time.time()
+            print((end-start)*1000, "ms", end = "\n")
 
 if __name__ == "__main__":
     tests()
