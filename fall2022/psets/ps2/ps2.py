@@ -50,7 +50,7 @@ class BinarySearchTree:
     
     ind: a number between 0 and n-1 (the number of nodes/objects)
     returns BinarySearchTree/Node or None
-    '''
+
     def select(self, ind):
         left_size = 0
         if self.left is not None:
@@ -62,12 +62,25 @@ class BinarySearchTree:
         if left_size < ind and self.right is not None:
             return self.right.select(ind)
         return None
+    '''
+    def select(self, ind):
+        left_size = 0
+        if self.left is not None:
+            left_size = self.left.size
+        if ind == left_size:
+            return self
+        if left_size > ind and self.left is not None:
+            return self.left.select(ind)
+        if left_size < ind and self.right is not None:
+            return self.right.select(ind-left_size-1)
+        return None
 
 
     '''
     Searches for a given key
     returns a pointer to the object with target key or None (Roughgarden)
     '''
+
     def search(self, key):
         if self is None:
             return None
@@ -78,7 +91,6 @@ class BinarySearchTree:
         elif self.left is not None:
             return self.left.search(key)
         return None
-    
 
     '''
     Inserts a key into the tree
@@ -86,7 +98,7 @@ class BinarySearchTree:
         ... this is NOT a BinarySearchTree/Node, the function creates one
     
     returns the original (top level) tree - allows for easy chaining in tests
-    '''
+
     def insert(self, key):
         if self.key is None:
             self.key = key
@@ -100,7 +112,22 @@ class BinarySearchTree:
             self.right.insert(key)
         self.calculate_sizes()
         return self
+    '''
 
+    def insert(self, key):
+        if self.key is None:
+            self.key = key
+        elif self.key > key: 
+            if self.left is None:
+                self.left = BinarySearchTree(self.debugger)
+            self.size += 1
+            self.left.insert(key)
+        elif self.key < key:
+            if self.right is None:
+                self.right = BinarySearchTree(self.debugger)
+            self.size += 1
+            self.right.insert(key)
+        return self
     
     ####### Part b #######
 
@@ -123,10 +150,62 @@ class BinarySearchTree:
         \
         12
         /
-       11 
+       11 a
     '''
+    @staticmethod
+    def help_size(node): 
+        if node is None: 
+            return 0 
+        else: 
+            return node.size 
+
     def rotate(self, direction, child_side):
-        # Your code goes here
+        if child_side == "L": 
+            s = self.left 
+            if direction == "L": 
+                #assignment 
+                r = s.right
+                r_prime = r.right 
+                s.right = None 
+                r.left = None 
+                #movement
+                self.left = r
+                r.left = s
+                s.right = r_prime
+            else: 
+                #assignment 
+                r = s.left 
+                r_prime = r.right 
+                s.left = None 
+                r.right = None 
+                #movement
+                self.left = r
+                r.right = s 
+                s.left = r_prime 
+        else: 
+            s = self.right
+            if direction == "L": 
+                #assignment 
+                r = s.right 
+                r_prime = r.left 
+                s.right = None 
+                r.left = None 
+                #movement 
+                self.right = r
+                r.left = s
+                s.right = r_prime
+            else: 
+                #assignment 
+                r = s.left 
+                r_prime = r.right
+                s.left = None 
+                r.right = None 
+                #movement 
+                self.right = r
+                r.right = s
+                s.left = r_prime 
+            r.size = BinarySearchTree.help_size(s) + BinarySearchTree.help_size(r) + BinarySearchTree.help_size(r_prime)
+            s.size = BinarySearchTree.help_size(r_prime) + BinarySearchTree.help_size(s) 
         return self
 
     def print_bst(self):
