@@ -115,16 +115,19 @@ class BinarySearchTree:
     '''
 
     def insert(self, key):
+        #clarify height of original tree or height of new tree 
         if self.key is None:
             self.key = key
         elif self.key > key: 
             if self.left is None:
                 self.left = BinarySearchTree(self.debugger)
+                #self.left.key = key
             self.size += 1
             self.left.insert(key)
         elif self.key < key:
             if self.right is None:
                 self.right = BinarySearchTree(self.debugger)
+                #self.right.key = key
             self.size += 1
             self.right.insert(key)
         return self
@@ -163,9 +166,9 @@ class BinarySearchTree:
         if child_side == "L": 
             s = self.left 
             if direction == "L": 
-                #assignment 
-                r = s.right
-                r_prime = r.right 
+                #assignment - check for None?
+                r = s.right if s is not None else None #give error is s is none
+                r_prime = r.right if r is not None else None #give error is r is none
                 s.right = None 
                 r.left = None 
                 #movement
@@ -173,9 +176,9 @@ class BinarySearchTree:
                 r.left = s
                 s.right = r_prime
             else: 
-                #assignment 
-                r = s.left 
-                r_prime = r.right 
+                #assignment - check for None? 
+                r = s.left if s is not None else None #give error if s is none 
+                r_prime = r.right if r is not None else None #give error is r is none
                 s.left = None 
                 r.right = None 
                 #movement
@@ -185,9 +188,9 @@ class BinarySearchTree:
         else: 
             s = self.right
             if direction == "L": 
-                #assignment 
-                r = s.right 
-                r_prime = r.left 
+                #assignment - check for None? 
+                r = s.right if s is not None else None #give error is s is none
+                r_prime = r.left if r is not None else None #give error is r is none
                 s.right = None 
                 r.left = None 
                 #movement 
@@ -196,8 +199,8 @@ class BinarySearchTree:
                 s.right = r_prime
             else: 
                 #assignment 
-                r = s.left 
-                r_prime = r.right
+                r = s.left if s is not None else None #give error is s is none
+                r_prime = r.right if r is not None else None #give error is r is none
                 s.left = None 
                 r.right = None 
                 #movement 
