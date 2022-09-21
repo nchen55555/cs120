@@ -168,7 +168,7 @@ class BinarySearchTree:
             if direction == "L": 
                 #assignment - check for None?
                 r = s.right if s is not None else None #give error is s is none
-                r_prime = r.right if r is not None else None #give error is r is none
+                r_prime = r.left if r is not None else None #give error is r is none
                 s.right = None 
                 r.left = None 
                 #movement
