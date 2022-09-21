@@ -208,9 +208,8 @@ class BinarySearchTree:
                 r.right = s
                 s.left = r_prime 
             temp = BinarySearchTree.help_size(r)
-            r.size = BinarySearchTree.help_size(s) #+ BinarySearchTree.help_size(r) + BinarySearchTree.help_size(r_prime)
+            r.size = BinarySearchTree.help_size(s) 
             s.size = BinarySearchTree.help_size(s) - temp + BinarySearchTree.help_size(r_prime)
-            #s.size = BinarySearchTree.help_size(r_prime) + BinarySearchTree.help_size(s) 
         return self
 
     def print_bst(self):
