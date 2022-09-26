@@ -3,6 +3,7 @@
 # You can use `tests.py` to run your simulator on some prewritten RAM programs.
 
 from collections import defaultdict
+import math
 
 variableList = []
 # Note: defaultdict works exactly the same as a normal Python dictionary except it returns a default 
@@ -66,7 +67,7 @@ def executeProgram(programArr, inputArr):
             # Remember division by 0 results in 0.
             # implementation below 
             if variableList[ops[2]] != 0:
-                variableList[ops[0]] = variableList[ops[1]] / variableList[ops[2]]
+                variableList[ops[0]] = max(math.floor(variableList[ops[1]] / variableList[ops[2]]),0)
             else: 
                 variableList[ops[0]] = 0
             
