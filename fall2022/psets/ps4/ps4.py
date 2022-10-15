@@ -58,8 +58,6 @@ def QuickSelect(arr, i):
 
     # Feel free to use get_random_index(arr) or get_random_int(start_inclusive, end_inclusive)
     # ... see the helper functions below
-    pass
-    return (0, -1)
 
 
 '''
@@ -93,7 +91,7 @@ def MergeSortSelect(arr, query_list):
 
 def experiments():
     # Edit this parameter
-    k = [26, 28, 29, 31, 34, 35, 37]
+    k = [26, 28, 30, 32, 35, 37]
 
     # Feel free to edit these initial parameters
 
