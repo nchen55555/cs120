@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import time
 import math
 import random
+import statistics
 
 random.seed(120)
 
@@ -28,10 +29,7 @@ arr: a list of key-value pair tuples
 i: an integer [0, n-1] 
 returns: An key-value pair (Kj, Vj) such that Kj is an i’th smallest key.
 '''
-
-
 def QuickSelect(arr, i):
-    # Your code here
     if len(arr) <= 1: 
         return arr[0] #double check here for if array is empty 
     else: 
@@ -51,6 +49,35 @@ def QuickSelect(arr, i):
             return QuickSelect(array_less, i)
         elif i >= len(array_less) + len(array_equal):
             return QuickSelect(array_more, i - len(array_less) - len(array_equal))
+        else: 
+            return array_equal[0]
+
+def QuickSelectOptimized(arr, i):
+    if len(arr) <= 1: 
+        return arr[0] #double check here for if array is empty 
+    else: 
+        pointers = []
+        if len(arr) > 3: 
+            while len(pointers) < 3:
+                pointers.append(get_random_index(arr))
+            pointer = statistics.median(pointers)
+        else: 
+            pointer = get_random_index(arr)
+        p = arr[pointer][0]
+        array_less = []
+        array_equal = []
+        array_more = []
+        for val in arr: 
+            if val[0] > p: 
+                array_more.append(val)
+            elif val[0] < p: 
+                array_less.append(val)
+            else: 
+                array_equal.append(val)
+        if i < len(array_less):
+            return QuickSelectOptimized(array_less, i)
+        elif i >= len(array_less) + len(array_equal):
+            return QuickSelectOptimized(array_more, i - len(array_less) - len(array_equal))
         else: 
             return array_equal[0]
 
@@ -91,7 +118,7 @@ def MergeSortSelect(arr, query_list):
 
 def experiments():
     # Edit this parameter
-    k = [26, 28, 30, 32, 35, 37]
+    k = [26, 28, 31, 34, 35, 37]
 
     # Feel free to edit these initial parameters
 
@@ -136,6 +163,20 @@ def experiments():
                 k_record.append(ki)
                 ms_record.append(seconds * 1000)  # Convert seconds to milliseconds
                 algorithm_record.append("QuickSelect")
+            
+            # QuickSelectOptimized Runs
+            #for _ in range(RUNS):
+            #    # Record Time Taken to Solve All Queries
+            #    start_time = time.time()
+            #    for q in queries:
+            #        # Copy dataset just to be safe
+            #        QuickSelectOptimized(dataset_size_n.copy(), q)
+            #    seconds = time.time() - start_time
+            #    # Record this trial run
+            #    n_record.append(ni)
+            #    k_record.append(ki)
+            #    ms_record.append(seconds * 1000)  # Convert seconds to milliseconds
+            #    algorithm_record.append("QuickSelectOptimized")
 
             # MergeSort Runs
             for _ in range(RUNS):
