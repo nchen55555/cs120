@@ -118,7 +118,7 @@ def MergeSortSelect(arr, query_list):
 
 def experiments():
     # Edit this parameter
-    k = [26, 28, 31, 34, 35, 37]
+    k = [10, 20, 30, 40, 50]
 
     # Feel free to edit these initial parameters
 
@@ -165,31 +165,31 @@ def experiments():
                 algorithm_record.append("QuickSelect")
             
             # QuickSelectOptimized Runs
-            #for _ in range(RUNS):
-            #    # Record Time Taken to Solve All Queries
-            #    start_time = time.time()
-            #    for q in queries:
-            #        # Copy dataset just to be safe
-            #        QuickSelectOptimized(dataset_size_n.copy(), q)
-            #    seconds = time.time() - start_time
-            #    # Record this trial run
-            #    n_record.append(ni)
-            #    k_record.append(ki)
-            #    ms_record.append(seconds * 1000)  # Convert seconds to milliseconds
-            #    algorithm_record.append("QuickSelectOptimized")
-
-            # MergeSort Runs
             for _ in range(RUNS):
-                # Record Time Taken to Solve All Queries
+            #    # Record Time Taken to Solve All Queries
                 start_time = time.time()
-                # Copy dataset just to be safe
-                MergeSortSelect(dataset_size_n.copy(), queries)
+                for q in queries:
+                    # Copy dataset just to be safe
+                    QuickSelectOptimized(dataset_size_n.copy(), q)
                 seconds = time.time() - start_time
                 # Record this trial run
                 n_record.append(ni)
                 k_record.append(ki)
                 ms_record.append(seconds * 1000)  # Convert seconds to milliseconds
-                algorithm_record.append("MergeSort")
+                algorithm_record.append("QuickSelectOptimized")
+
+            # MergeSort Runs
+            #for _ in range(RUNS):
+            #    # Record Time Taken to Solve All Queries
+            #    start_time = time.time()
+            #    # Copy dataset just to be safe
+            #    MergeSortSelect(dataset_size_n.copy(), queries)
+            #    seconds = time.time() - start_time
+            #    # Record this trial run
+            #    n_record.append(ni)
+            #   k_record.append(ki)
+            #    ms_record.append(seconds * 1000)  # Convert seconds to milliseconds
+            #    algorithm_record.append("MergeSort")
 
             # Print progress
             iter += 1

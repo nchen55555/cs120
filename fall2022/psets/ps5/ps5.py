@@ -128,10 +128,35 @@ def bfs_2_coloring(G, precolored_nodes=None):
             return G.colors
     
     # TODO: Complete this function by implementing two-coloring using the colors 0 and 1.
-    # If there is no valid coloring, reset all the colors to None using G.reset_colors()
-    
-    G.reset_colors()
-    return None
+    # If there is no valid coloring, reset all the colors to None using G.reset_colors() 
+    set_ofG = set()
+    for i in range(G.N): 
+        set_ofG.add(i)
+    frontier = set()
+    while len(visited) < G.N:  
+        set_ofG = set_ofG.difference(visited)
+        src = next(iter(set_ofG))
+        visited.add(src) 
+        frontier.add(src)
+        G.colors[src] = 0 #check back here 
+        while len(frontier) > 0: 
+            ele = next(iter(frontier))
+            for neighbor in G.edges[ele]: 
+                if G.colors[neighbor] == G.colors[ele]:
+                    G.reset_colors() 
+                    return None
+                elif neighbor not in visited: 
+                    frontier.add(neighbor)
+                    G.colors[neighbor] = 1- G.colors[ele]
+            visited.add(ele)
+            frontier.pop()
+    if G.is_graph_coloring_valid(): 
+        return G.colors
+    else: 
+        G.reset_colors() 
+        return None
+
+            
 
 '''
     Part B: Implement is_independent_set.
@@ -140,8 +165,10 @@ def bfs_2_coloring(G, precolored_nodes=None):
 # Given an instance of the Graph class G and a subset of precolored nodes,
 # Checks if subset is an independent set in G 
 def is_independent_set(G, subset):
-    # TODO: Complete this function
-
+    for node in subset: 
+        for v in G.edges[node]:
+            if v in subset: 
+                return False
     return True
 
 '''
